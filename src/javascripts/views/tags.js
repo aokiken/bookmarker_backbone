@@ -20,22 +20,22 @@ app.views.Tags = Backbone.View.extend({
 
   // actions
   index: function () {
-    app.views.topBar.setTitle({href: '/#tags', text: 'tags'});
+    app.views.topBar.setTitle({href: './#tags', text: 'tags'});
     app.views.actionsSidebar.setLinks([
-      {href: '/#tags/add', text: 'New Tag'},
-      {href: '/#bookmarks', text: 'List Bookmarks'},
-      {href: '/#bookmarks/add', text: 'New Bookmark'}
+      {href: './#tags/add', text: 'New Tag'},
+      {href: './#bookmarks', text: 'List Bookmarks'},
+      {href: './#bookmarks/add', text: 'New Bookmark'}
     ]);
     app.views.main.changeContent(_.template('tmp-tags.index')({tags: app.collections.tags.models}));
     return this;
   },
   add: function () {
     this.events = {'submit #tag_add': 'addSubmit'};
-    app.views.topBar.setTitle({href: '/#tags/add', text: 'Tags'});
+    app.views.topBar.setTitle({href: './#tags/add', text: 'Tags'});
     app.views.actionsSidebar.setLinks([
-      {href: '/#tags', text: 'List Tags'},
-      {href: '/#bookmarks', text: 'List Bookmarks'},
-      {href: '/#bookmarks/add', text: 'New Bookmark'}
+      {href: './#tags', text: 'List Tags'},
+      {href: './#bookmarks', text: 'List Bookmarks'},
+      {href: './#bookmarks/add', text: 'New Bookmark'}
     ]);
     this.$el.html(_.template('tmp-tags.add')({bookmarks: app.collections.bookmarks.models}));
     app.views.main.changeContent(this.el);
@@ -44,14 +44,14 @@ app.views.Tags = Backbone.View.extend({
   },
   view: function (id) {
     var tag = app.collections.tags.view(id);
-    app.views.topBar.setTitle({href: '/#tags/view', text: 'Tags'});
+    app.views.topBar.setTitle({href: './#tags/view', text: 'Tags'});
     app.views.actionsSidebar.setLinks([
-      {href: '/#tags/edit/' + id, text: 'Edit Tag'},
-      {href: '/#tags/delete/' + id, text: 'Delete Tag'},
-      {href: '/#tags', text: 'List Tags'},
-      {href: '/#tags/add', text: 'New Tag'},
-      {href: '/#bookmarks', text: 'List Bookmarks'},
-      {href: '/#bookmarks/add', text: 'New Bookmark'}
+      {href: './#tags/edit/' + id, text: 'Edit Tag'},
+      {href: './#tags/delete/' + id, text: 'Delete Tag'},
+      {href: './#tags', text: 'List Tags'},
+      {href: './#tags/add', text: 'New Tag'},
+      {href: './#bookmarks', text: 'List Bookmarks'},
+      {href: './#bookmarks/add', text: 'New Bookmark'}
     ]);
     app.views.main.changeContent(_.template('tmp-tags.view')({tag: tag}));
     return this;
@@ -59,12 +59,12 @@ app.views.Tags = Backbone.View.extend({
   edit: function (id) {
     this.events = {'submit #tag_edit': 'editSubmit'};
     var tag = app.collections.tags.edit(id);
-    app.views.topBar.setTitle({href: '/#tags/edit', text: 'Tags'});
+    app.views.topBar.setTitle({href: './#tags/edit', text: 'Tags'});
     app.views.actionsSidebar.setLinks([
-      {href: '/#tags/delete/' + id, text: 'Delete'},
-      {href: '/#tags', text: 'List Tags'},
-      {href: '/#bookmarks', text: 'List Bookmarks'},
-      {href: '/#bookmarks/add', text: 'New Bookmark'}
+      {href: './#tags/delete/' + id, text: 'Delete'},
+      {href: './#tags', text: 'List Tags'},
+      {href: './#bookmarks', text: 'List Bookmarks'},
+      {href: './#bookmarks/add', text: 'New Bookmark'}
     ]);
     this.$el.html(_.template('tmp-tags.edit')({
       tag: tag,

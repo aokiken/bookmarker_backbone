@@ -21,11 +21,11 @@ app.views.Bookmarks = Backbone.View.extend({
 
   // actions
   index: function () {
-    app.views.topBar.setTitle({href: '/#bookmarks', text: 'Bookmarks'});
+    app.views.topBar.setTitle({href: './#bookmarks', text: 'Bookmarks'});
     app.views.actionsSidebar.setLinks([
-      {href: '/#bookmarks/add', text: 'New Bookmark'},
-      {href: '/#tags', text: 'List Tags'},
-      {href: '/#tags/add', text: 'New Tag'}
+      {href: './#bookmarks/add', text: 'New Bookmark'},
+      {href: './#tags', text: 'List Tags'},
+      {href: './#tags/add', text: 'New Tag'}
     ]);
     this.$el.html(_.template('tmp-bookmarks.index')({bookmarks: app.collections.bookmarks.models}));
     app.views.main.changeContent(this.el);
@@ -33,11 +33,11 @@ app.views.Bookmarks = Backbone.View.extend({
   },
   add: function () {
     this.events = {'submit #bookmark_add': 'addSubmit'};
-    app.views.topBar.setTitle({href: '/#bookmarks/add', text: 'Bookmarks'});
+    app.views.topBar.setTitle({href: './#bookmarks/add', text: 'Bookmarks'});
     app.views.actionsSidebar.setLinks([
-      {href: '/#bookmarks', text: 'List Bookmarks'},
-      {href: '/#tags', text: 'List Tags'},
-      {href: '/#tags/add', text: 'New Tag'}
+      {href: './#bookmarks', text: 'List Bookmarks'},
+      {href: './#tags', text: 'List Tags'},
+      {href: './#tags/add', text: 'New Tag'}
     ]);
     this.$el.html(_.template('tmp-bookmarks.add')({tags: app.collections.tags.models}));
     app.views.main.changeContent(this.el);
@@ -46,14 +46,14 @@ app.views.Bookmarks = Backbone.View.extend({
   },
   view: function (id) {
     var bookmark = app.collections.bookmarks.view(id);
-    app.views.topBar.setTitle({href: '/#bookmarks/view/' + id, text: 'Bookmarks'});
+    app.views.topBar.setTitle({href: './#bookmarks/view/' + id, text: 'Bookmarks'});
     app.views.actionsSidebar.setLinks([
-      {href: '/#bookmarks/edit/' + id, text: 'Edit Bookmark'},
-      {href: '/#bookmarks/delete/' + id, text: 'Delete Bookmark'},
-      {href: '/#bookmarks', text: 'List Bookmarks'},
-      {href: '/#bookmarks/add', text: 'New Bookmark'},
-      {href: '/#tags', text: 'List Tags'},
-      {href: '/#tags/add', text: 'New Tag'}
+      {href: './#bookmarks/edit/' + id, text: 'Edit Bookmark'},
+      {href: './#bookmarks/delete/' + id, text: 'Delete Bookmark'},
+      {href: './#bookmarks', text: 'List Bookmarks'},
+      {href: './#bookmarks/add', text: 'New Bookmark'},
+      {href: './#tags', text: 'List Tags'},
+      {href: './#tags/add', text: 'New Tag'}
     ]);
     this.$el.html(_.template('tmp-bookmarks.view')({bookmark: bookmark}));
     app.views.main.changeContent(this.el);
@@ -62,12 +62,12 @@ app.views.Bookmarks = Backbone.View.extend({
   edit: function (id) {
     this.events = {'submit #bookmark_edit': 'editSubmit'};
     var bookmark = app.collections.bookmarks.edit(id);
-    app.views.topBar.setTitle({href: '/#bookmarks/edit/' + id, text: 'Bookmarks'});
+    app.views.topBar.setTitle({href: './#bookmarks/edit/' + id, text: 'Bookmarks'});
     app.views.actionsSidebar.setLinks([
-      {href: '/#bookmarks/delete/' + id, text: 'Delete'},
-      {href: '/#bookmarks', text: 'List Bookmarks'},
-      {href: '/#tags', text: 'List Tags'},
-      {href: '/#tags/add', text: 'New Tag'}
+      {href: './#bookmarks/delete/' + id, text: 'Delete'},
+      {href: './#bookmarks', text: 'List Bookmarks'},
+      {href: './#tags', text: 'List Tags'},
+      {href: './#tags/add', text: 'New Tag'}
     ]);
     this.$el.html(_.template('tmp-bookmarks.edit')({
       bookmark: bookmark,
