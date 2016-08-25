@@ -15,7 +15,7 @@ form#bookmark_edit(accept-charset="utf-8")
       label(for="tags-ids") Tags
       select#tags-ids(name="tag_ids[]" multiple="multiple")
         <% _.each(tags, function(tag) { %>
-          <% if(relatedTags.indexOf(tag.attributes.id) !== '-1') { %>
+          <% if(relatedTags.indexOf(tag.attributes.id) !== -1) { %>
             option(value!="<%= tag.attributes.id %>" selected) <%= tag.attributes.title %>
           <% } else { %>
             option(value!="<%= tag.attributes.id %>") <%= tag.attributes.title %>

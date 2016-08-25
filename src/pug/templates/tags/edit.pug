@@ -9,7 +9,7 @@ form#tag_edit(accept-charset="utf-8")
       label(for="bookmarks-ids") Bookmarks
       select#bookmarks-ids(name="bookmarks_ids[]" multiple="multiple")
         <% _.each(bookmarks, function(bookmark) { %>
-          <% if(relatedTags.indexOf(bookmark.attributes.id) !== '-1') { %>
+          <% if(relatedTags.indexOf(bookmark.attributes.id) !== -1) { %>
             option(value!="<%= bookmark.attributes.id %>" selected) <%= bookmark.attributes.title %>
           <% } else { %>
             option(value!="<%= bookmark.attributes.id %>") <%= bookmark.attributes.title %>

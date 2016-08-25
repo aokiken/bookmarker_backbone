@@ -52,15 +52,16 @@ app.collections.Bookmarks = Backbone.Collection.extend({
   },
   editSubmit: function (data) {
     data = this.serializeArrayFormat(data);
+    var bookmark = app.collections.bookmarks.get(data.id);
     var bookmarksTags = app.collections.bookmarksTags.find({bookmark_id: data.id});
     var tag_ids = ('tag_ids' in data) ? data['tag_ids'] : [];
     delete data['tag_ids'];
-    var bookmark = this.set(data);
+    bookmark.set(data);
     if (bookmark) {
       app.collections.bookmarksTags.remove(bookmarksTags);
       tag_ids.forEach(function (tag_id) {
         app.collections.bookmarksTags.add({
-          bookmark_id: bookmark.attributes.id,
+          bookmark_id: bookmark.id,
           tag_id: tag_id
         });
       });

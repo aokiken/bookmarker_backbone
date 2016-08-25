@@ -1,4 +1,4 @@
-window.app = {
+var app = {
   views: {},
   models: {},
   collections: {},
