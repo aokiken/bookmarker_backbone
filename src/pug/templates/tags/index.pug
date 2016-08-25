@@ -1,0 +1,28 @@
+h3 Tags
+table(cellpadding="0" cellspacing="0")
+  thead
+    tr
+      th Id
+      th Title
+      th Created
+      th Modified
+      th.actions Actions
+  tbody
+    <% _.each(tags, function(tag) { %>
+      tr
+        td <%= tag.attributes.id %>
+        td <%= tag.attributes.title %>
+        td <%= tag.dateFormat("created") %>
+        td <%= tag.dateFormat("modified") %>
+        td.actions
+          a(href!="#tags/view/<%= tag.attributes.id %>") View
+          a(href!="#tags/edit/<%= tag.attributes.id %>") Edit
+          a(href!="#tags/delete/<%= tag.attributes.id %>") Delete
+    <% }); %>
+.paginator
+  ul.pagination
+    li.prev.disabled
+      a(href="" onclick="return false;") &lt; previous
+    li.next.disabled
+      a(href="" onclick="return false;") next &gt;
+  p 1 of 1

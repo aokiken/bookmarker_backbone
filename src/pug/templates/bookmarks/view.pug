@@ -1,0 +1,44 @@
+h3 <%= bookmark.attributes.title %>
+table.vertical-table
+  tbody
+    tr
+      th Title
+      td <%= bookmark.attributes.title %>
+    tr
+      th Id
+      td <%= bookmark.attributes.id %>
+    tr
+      th Created
+      td <%= bookmark.dateFormat("created") %>
+    tr
+      th Modified
+      td <%= bookmark.dateFormat("modified") %>
+.row
+  h4 Description
+  p <%= bookmark.attributes.description %>
+.row
+  h4 Url
+  p <%= bookmark.attributes.url %>
+.related
+  h4 Related Tags
+  <% if(bookmark.attributes.tags.length){ %>
+  table(cellpadding="0" cellspacing="0")
+    tbody
+      tr
+        th Id
+        th Title
+        th Created
+        th Modified
+        th.actions Actions
+      <% _.each(bookmark.attributes.tags, function(tag) { %>
+      tr
+        td <%= tag.attributes.id %>
+        td <%= tag.attributes.title %>
+        td <%= tag.dateFormat("created") %>
+        td <%= tag.dateFormat("modified") %>
+        td.actions
+          a(href!="#tags/view/<%= tag.attributes.id %>") View
+          a(href!="#tags/edit/<%= tag.attributes.id %>") Edit
+          a(href!="#tags/delete/<%= tag.attributes.id %>") Delete
+      <% }); %>
+  <% }; %>

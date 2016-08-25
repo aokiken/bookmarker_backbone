@@ -1,0 +1,18 @@
+form#tag_edit(accept-charset="utf-8")
+  input(type="hidden" name="id" maxlength="50" value!="<%= tag.attributes.id %>")
+  fieldset
+    legend Edit Tag
+    .input.text
+      label(for="title") Title
+      input#title(type="text" name="title" maxlength="255" value!="<%= tag.attributes.title %>")
+    .input.select
+      label(for="bookmarks-ids") Bookmarks
+      select#bookmarks-ids(name="bookmarks_ids[]" multiple="multiple")
+        <% _.each(bookmarks, function(bookmark) { %>
+          <% if(relatedTags.indexOf(bookmark.attributes.id) !== '-1') { %>
+            option(value!="<%= bookmark.attributes.id %>" selected) <%= bookmark.attributes.title %>
+          <% } else { %>
+            option(value!="<%= bookmark.attributes.id %>") <%= bookmark.attributes.title %>
+          <% } %>
+        <% }); %>
+  button(type="submit") Submit
