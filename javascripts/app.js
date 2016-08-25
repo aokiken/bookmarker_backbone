@@ -18300,11 +18300,11 @@ app.views.Bookmarks = Backbone.View.extend({
 
   // actions
   index: function () {
-    app.views.topBar.setTitle({href: '/#bookmarks', text: 'Bookmarks'});
+    app.views.topBar.setTitle({href: './#bookmarks', text: 'Bookmarks'});
     app.views.actionsSidebar.setLinks([
-      {href: '/#bookmarks/add', text: 'New Bookmark'},
-      {href: '/#tags', text: 'List Tags'},
-      {href: '/#tags/add', text: 'New Tag'}
+      {href: './#bookmarks/add', text: 'New Bookmark'},
+      {href: './#tags', text: 'List Tags'},
+      {href: './#tags/add', text: 'New Tag'}
     ]);
     this.$el.html(_.template('<h3>Bookmarks</h3><table cellpadding="0" cellspacing="0"><thead><tr><th>Id</th><th>Title</th><th>Created</th><th>Modified</th><th class="actions">Actions</th></tr></thead><tbody><% _.each(bookmarks, function(bookmark) { %><tr><td><%= bookmark.attributes.id %></td><td><%= bookmark.attributes.title %></td><td><%= bookmark.dateFormat("created") %></td><td><%= bookmark.dateFormat("modified") %></td><td class="actions"><a href="#bookmarks/view/<%= bookmark.attributes.id %>">View</a><a href="#bookmarks/edit/<%= bookmark.attributes.id %>">Edit</a><a href="#bookmarks/delete/<%= bookmark.attributes.id %>">Delete</a></td></tr><% }); %></tbody></table><div class="paginator"><ul class="pagination"><li class="prev disabled"><a href="" onclick="return false;">&lt; previous</a></li><li class="next disabled"><a href="" onclick="return false;">next &gt;</a></li></ul><p>1 of 1</p></div>')({bookmarks: app.collections.bookmarks.models}));
     app.views.main.changeContent(this.el);
@@ -18312,11 +18312,11 @@ app.views.Bookmarks = Backbone.View.extend({
   },
   add: function () {
     this.events = {'submit #bookmark_add': 'addSubmit'};
-    app.views.topBar.setTitle({href: '/#bookmarks/add', text: 'Bookmarks'});
+    app.views.topBar.setTitle({href: './#bookmarks/add', text: 'Bookmarks'});
     app.views.actionsSidebar.setLinks([
-      {href: '/#bookmarks', text: 'List Bookmarks'},
-      {href: '/#tags', text: 'List Tags'},
-      {href: '/#tags/add', text: 'New Tag'}
+      {href: './#bookmarks', text: 'List Bookmarks'},
+      {href: './#tags', text: 'List Tags'},
+      {href: './#tags/add', text: 'New Tag'}
     ]);
     this.$el.html(_.template('<form id="bookmark_add" accept-charset="utf-8"><fieldset><legend>Add Bookmark</legend><div class="input text"><label for="title">Title</label><input id="title" type="text" name="title" maxlength="50"/></div><div class="input textarea"><label for="description">Description</label><textarea id="description" name="description" rows="5"></textarea></div><div class="input textarea"><label for="url">Url</label><textarea name="url" id="url" rows="5"></textarea></div><div class="input select"><label for="tag-ids">Tags</label><select id="tag-ids" name="tag_ids[]" multiple="multiple"><% _.each(tags, function(tag) { %><option value="<%= tag.attributes.id %>"><%= tag.attributes.title %></option><% }); %></select></div></fieldset><button type="submit">Submit</button></form>')({tags: app.collections.tags.models}));
     app.views.main.changeContent(this.el);
@@ -18325,14 +18325,14 @@ app.views.Bookmarks = Backbone.View.extend({
   },
   view: function (id) {
     var bookmark = app.collections.bookmarks.view(id);
-    app.views.topBar.setTitle({href: '/#bookmarks/view/' + id, text: 'Bookmarks'});
+    app.views.topBar.setTitle({href: './#bookmarks/view/' + id, text: 'Bookmarks'});
     app.views.actionsSidebar.setLinks([
-      {href: '/#bookmarks/edit/' + id, text: 'Edit Bookmark'},
-      {href: '/#bookmarks/delete/' + id, text: 'Delete Bookmark'},
-      {href: '/#bookmarks', text: 'List Bookmarks'},
-      {href: '/#bookmarks/add', text: 'New Bookmark'},
-      {href: '/#tags', text: 'List Tags'},
-      {href: '/#tags/add', text: 'New Tag'}
+      {href: './#bookmarks/edit/' + id, text: 'Edit Bookmark'},
+      {href: './#bookmarks/delete/' + id, text: 'Delete Bookmark'},
+      {href: './#bookmarks', text: 'List Bookmarks'},
+      {href: './#bookmarks/add', text: 'New Bookmark'},
+      {href: './#tags', text: 'List Tags'},
+      {href: './#tags/add', text: 'New Tag'}
     ]);
     this.$el.html(_.template('<h3><%= bookmark.attributes.title %></h3><table class="vertical-table"><tbody><tr><th>Title</th><td><%= bookmark.attributes.title %></td></tr><tr><th>Id</th><td><%= bookmark.attributes.id %></td></tr><tr><th>Created</th><td><%= bookmark.dateFormat("created") %></td></tr><tr><th>Modified</th><td><%= bookmark.dateFormat("modified") %></td></tr></tbody></table><div class="row"><h4>Description</h4><p><%= bookmark.attributes.description %></p></div><div class="row"><h4>Url</h4><p><%= bookmark.attributes.url %></p></div><div class="related"><h4>Related Tags</h4><% if(bookmark.attributes.tags.length){ %><table cellpadding="0" cellspacing="0"><tbody><tr><th>Id</th><th>Title</th><th>Created</th><th>Modified</th><th class="actions">Actions</th></tr><% _.each(bookmark.attributes.tags, function(tag) { %><tr><td><%= tag.attributes.id %></td><td><%= tag.attributes.title %></td><td><%= tag.dateFormat("created") %></td><td><%= tag.dateFormat("modified") %></td><td class="actions"><a href="#tags/view/<%= tag.attributes.id %>">View</a><a href="#tags/edit/<%= tag.attributes.id %>">Edit</a><a href="#tags/delete/<%= tag.attributes.id %>">Delete</a></td></tr><% }); %></tbody></table><% }; %></div>')({bookmark: bookmark}));
     app.views.main.changeContent(this.el);
@@ -18341,12 +18341,12 @@ app.views.Bookmarks = Backbone.View.extend({
   edit: function (id) {
     this.events = {'submit #bookmark_edit': 'editSubmit'};
     var bookmark = app.collections.bookmarks.edit(id);
-    app.views.topBar.setTitle({href: '/#bookmarks/edit/' + id, text: 'Bookmarks'});
+    app.views.topBar.setTitle({href: './#bookmarks/edit/' + id, text: 'Bookmarks'});
     app.views.actionsSidebar.setLinks([
-      {href: '/#bookmarks/delete/' + id, text: 'Delete'},
-      {href: '/#bookmarks', text: 'List Bookmarks'},
-      {href: '/#tags', text: 'List Tags'},
-      {href: '/#tags/add', text: 'New Tag'}
+      {href: './#bookmarks/delete/' + id, text: 'Delete'},
+      {href: './#bookmarks', text: 'List Bookmarks'},
+      {href: './#tags', text: 'List Tags'},
+      {href: './#tags/add', text: 'New Tag'}
     ]);
     this.$el.html(_.template('<form id="bookmark_edit" accept-charset="utf-8"><fieldset><legend>Edit Bookmark</legend><input type="hidden" name="id" maxlength="50" value="<%= bookmark.attributes.id %>"/><div class="input text"><label for="title">Title</label><input id="title" type="text" name="title" maxlength="50" value="<%= bookmark.attributes.title %>"/></div><div class="input textarea"><label for="description">Description</label><textarea id="description" name="description" rows="5"><%= bookmark.attributes.description %></textarea></div><div class="input textarea"><label for="url">Url</label><textarea name="url" id="url" rows="5"><%= bookmark.attributes.url %></textarea></div><div class="input select"><label for="tags-ids">Tags</label><select id="tags-ids" name="tag_ids[]" multiple="multiple"><% _.each(tags, function(tag) { %><% if(relatedTags.indexOf(tag.attributes.id) !== -1) { %><option value="<%= tag.attributes.id %>" selected="selected"><%= tag.attributes.title %></option><% } else { %><option value="<%= tag.attributes.id %>"><%= tag.attributes.title %></option><% } %><% }); %></select></div></fieldset><button type="submit">Submit</button></form>')({
       bookmark: bookmark,
@@ -18395,22 +18395,22 @@ app.views.Tags = Backbone.View.extend({
 
   // actions
   index: function () {
-    app.views.topBar.setTitle({href: '/#tags', text: 'tags'});
+    app.views.topBar.setTitle({href: './#tags', text: 'tags'});
     app.views.actionsSidebar.setLinks([
-      {href: '/#tags/add', text: 'New Tag'},
-      {href: '/#bookmarks', text: 'List Bookmarks'},
-      {href: '/#bookmarks/add', text: 'New Bookmark'}
+      {href: './#tags/add', text: 'New Tag'},
+      {href: './#bookmarks', text: 'List Bookmarks'},
+      {href: './#bookmarks/add', text: 'New Bookmark'}
     ]);
     app.views.main.changeContent(_.template('<h3>Tags</h3><table cellpadding="0" cellspacing="0"><thead><tr><th>Id</th><th>Title</th><th>Created</th><th>Modified</th><th class="actions">Actions</th></tr></thead><tbody><% _.each(tags, function(tag) { %><tr><td><%= tag.attributes.id %></td><td><%= tag.attributes.title %></td><td><%= tag.dateFormat("created") %></td><td><%= tag.dateFormat("modified") %></td><td class="actions"><a href="#tags/view/<%= tag.attributes.id %>">View</a><a href="#tags/edit/<%= tag.attributes.id %>">Edit</a><a href="#tags/delete/<%= tag.attributes.id %>">Delete</a></td></tr><% }); %></tbody></table><div class="paginator"><ul class="pagination"><li class="prev disabled"><a href="" onclick="return false;">&lt; previous</a></li><li class="next disabled"><a href="" onclick="return false;">next &gt;</a></li></ul><p>1 of 1</p></div>')({tags: app.collections.tags.models}));
     return this;
   },
   add: function () {
     this.events = {'submit #tag_add': 'addSubmit'};
-    app.views.topBar.setTitle({href: '/#tags/add', text: 'Tags'});
+    app.views.topBar.setTitle({href: './#tags/add', text: 'Tags'});
     app.views.actionsSidebar.setLinks([
-      {href: '/#tags', text: 'List Tags'},
-      {href: '/#bookmarks', text: 'List Bookmarks'},
-      {href: '/#bookmarks/add', text: 'New Bookmark'}
+      {href: './#tags', text: 'List Tags'},
+      {href: './#bookmarks', text: 'List Bookmarks'},
+      {href: './#bookmarks/add', text: 'New Bookmark'}
     ]);
     this.$el.html(_.template('<form id="tag_add" accept-charset="utf-8"><fieldset><legend>Add Tag</legend><div class="input text"><label for="title">Title</label><input id="title" type="text" name="title" maxlength="255"/></div><div class="input select"><label for="bookmarks-ids">Bookmarks</label><select id="bookmarks-ids" name="bookmark_ids[]" multiple="multiple"><% _.each(bookmarks, function(bookmark) { %><option value="<%= bookmark.attributes.id %>"><%= bookmark.attributes.title %></option><% }); %></select></div></fieldset><button type="submit">Submit</button></form>')({bookmarks: app.collections.bookmarks.models}));
     app.views.main.changeContent(this.el);
@@ -18419,14 +18419,14 @@ app.views.Tags = Backbone.View.extend({
   },
   view: function (id) {
     var tag = app.collections.tags.view(id);
-    app.views.topBar.setTitle({href: '/#tags/view', text: 'Tags'});
+    app.views.topBar.setTitle({href: './#tags/view', text: 'Tags'});
     app.views.actionsSidebar.setLinks([
-      {href: '/#tags/edit/' + id, text: 'Edit Tag'},
-      {href: '/#tags/delete/' + id, text: 'Delete Tag'},
-      {href: '/#tags', text: 'List Tags'},
-      {href: '/#tags/add', text: 'New Tag'},
-      {href: '/#bookmarks', text: 'List Bookmarks'},
-      {href: '/#bookmarks/add', text: 'New Bookmark'}
+      {href: './#tags/edit/' + id, text: 'Edit Tag'},
+      {href: './#tags/delete/' + id, text: 'Delete Tag'},
+      {href: './#tags', text: 'List Tags'},
+      {href: './#tags/add', text: 'New Tag'},
+      {href: './#bookmarks', text: 'List Bookmarks'},
+      {href: './#bookmarks/add', text: 'New Bookmark'}
     ]);
     app.views.main.changeContent(_.template('<h3><%= tag.attributes.title %></h3><table class="vertical-table"><tbody><tr><th>Title</th><td><%= tag.attributes.title %></td></tr><tr><th>Id</th><td><%= tag.attributes.id %></td></tr><tr><th>Created</th><td><%= tag.dateFormat("created") %></td></tr><tr><th>Modified</th><td><%= tag.dateFormat("modified") %></td></tr></tbody></table><div class="related"><h4>Related Bookmarks</h4><% if(tag.attributes.bookmarks.length){ %><table cellpadding="0" cellspacing="0"><tbody><tr><th>Id</th><th>Title</th><th>Created</th><th>Modified</th><th class="actions">Actions</th></tr><% _.each(tag.attributes.bookmarks, function(bookmark) { %><tr><td><%= bookmark.attributes.id %></td><td><%= bookmark.attributes.title %></td><td><%= bookmark.dateFormat("created") %></td><td><%= bookmark.dateFormat("modified") %></td><td class="actions"><a href="#bookmarks/view/<%= bookmark.attributes.id %>">View</a><a href="#bookmarks/edit/<%= bookmark.attributes.id %>">Edit</a><a href="#bookmarks/delete/<%= bookmark.attributes.id %>">Delete</a></td></tr><% }); %></tbody></table><% }; %></div>')({tag: tag}));
     return this;
@@ -18434,12 +18434,12 @@ app.views.Tags = Backbone.View.extend({
   edit: function (id) {
     this.events = {'submit #tag_edit': 'editSubmit'};
     var tag = app.collections.tags.edit(id);
-    app.views.topBar.setTitle({href: '/#tags/edit', text: 'Tags'});
+    app.views.topBar.setTitle({href: './#tags/edit', text: 'Tags'});
     app.views.actionsSidebar.setLinks([
-      {href: '/#tags/delete/' + id, text: 'Delete'},
-      {href: '/#tags', text: 'List Tags'},
-      {href: '/#bookmarks', text: 'List Bookmarks'},
-      {href: '/#bookmarks/add', text: 'New Bookmark'}
+      {href: './#tags/delete/' + id, text: 'Delete'},
+      {href: './#tags', text: 'List Tags'},
+      {href: './#bookmarks', text: 'List Bookmarks'},
+      {href: './#bookmarks/add', text: 'New Bookmark'}
     ]);
     this.$el.html(_.template('<form id="tag_edit" accept-charset="utf-8"><input type="hidden" name="id" maxlength="50" value="<%= tag.attributes.id %>"/><fieldset><legend>Edit Tag</legend><div class="input text"><label for="title">Title</label><input id="title" type="text" name="title" maxlength="255" value="<%= tag.attributes.title %>"/></div><div class="input select"><label for="bookmarks-ids">Bookmarks</label><select id="bookmarks-ids" name="bookmarks_ids[]" multiple="multiple"><% _.each(bookmarks, function(bookmark) { %><% if(relatedTags.indexOf(bookmark.attributes.id) !== -1) { %><option value="<%= bookmark.attributes.id %>" selected="selected"><%= bookmark.attributes.title %></option><% } else { %><option value="<%= bookmark.attributes.id %>"><%= bookmark.attributes.title %></option><% } %><% }); %></select></div></fieldset><button type="submit">Submit</button></form>')({
       tag: tag,
