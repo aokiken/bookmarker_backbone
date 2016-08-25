@@ -17998,7 +17998,7 @@ return Backbone.LocalStorage;
     return _moment;
 
 }));
-window.app = {
+var app = {
   views: {},
   models: {},
   collections: {},
