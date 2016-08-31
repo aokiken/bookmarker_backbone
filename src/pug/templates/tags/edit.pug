@@ -7,7 +7,7 @@ form#tag_edit(accept-charset="utf-8")
       input#title(type="text" name="title" maxlength="255" value!="<%= tag.attributes.title %>")
     .input.select
       label(for="bookmarks-ids") Bookmarks
-      select#bookmarks-ids(name="bookmarks_ids[]" multiple="multiple")
+      select#bookmarks-ids(name="bookmark_ids[]" multiple="multiple")
         <% _.each(bookmarks, function(bookmark) { %>
           <% if(relatedTags.indexOf(bookmark.attributes.id) !== -1) { %>
             option(value!="<%= bookmark.attributes.id %>" selected) <%= bookmark.attributes.title %>
