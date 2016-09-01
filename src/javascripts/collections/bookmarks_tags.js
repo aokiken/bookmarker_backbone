@@ -1,6 +1,6 @@
 app.collections.BookmarksTags = Backbone.Collection.extend({
   model: app.models.BookmarksTags,
-  localStorage: new Backbone.LocalStorage('bookmarksTags'),
+  localStorage: new Store('bookmarksTags'),
   initialize: function () {
     this.on('add', this.addHook);
     this.on('remove', this.removeHook);

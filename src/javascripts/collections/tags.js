@@ -1,6 +1,6 @@
 app.collections.Tags = Backbone.Collection.extend({
   model: app.models.Tags,
-  localStorage: new Backbone.LocalStorage('tags'),
+  localStorage: new Store('tags'),
   initialize: function () {
     this.on('add', this.addHook);
     this.on('edit', this.addHook);
