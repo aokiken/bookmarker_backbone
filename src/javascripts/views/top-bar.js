@@ -1,11 +1,9 @@
-app.views.TopBar = Backbone.View.extend({
+import _ from 'underscore';
+import { View } from 'backbone';
+
+export default View.extend({
   el: '#top-bar',
-  initialize: function () {
-    return this;
-  },
-  titleTemplate: _.template('<a href="<%= linkObj.href %>"><%= linkObj.text %></a>'),
-  setTitle: function (linkObj) {
-    this.$('.title').html(this.titleTemplate({linkObj: linkObj}));
-    return this;
-  }
+  titleTemplate: _.template('tmp-layouts.top-bar'),
+  setTitle: (linkObj) =>
+    this.$('.title').html(this.titleTemplate({ linkObj: linkObj })),
 });

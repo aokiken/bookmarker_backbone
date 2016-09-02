@@ -1,4 +1,7 @@
-app.routes.Router = Backbone.Router.extend({
+import { Router } from 'backbone';
+import app from '../app';
+
+export default Router.extend({
   routes: {
     '': 'toppage',
     'bookmarks': 'bookmarks',
@@ -11,50 +14,17 @@ app.routes.Router = Backbone.Router.extend({
     'tags/view/:id': 'tagsView',
     'tags/edit/:id': 'tagsEdit',
     'tags/delete/:id': 'tagsDelete',
-    '*actions': 'toppage'
+    '*actions': 'toppage',
   },
-  toppage: function () {
-    app.router.navigate('bookmarks', {trigger: true});
-    return this;
-  },
-  bookmarks: function () {
-    app.views.bookmarks.index();
-    return this;
-  },
-  bookmarksAdd: function () {
-    app.views.bookmarks.add();
-    return this;
-  },
-  bookmarksView: function (id) {
-    app.views.bookmarks.view(id);
-    return this;
-  },
-  bookmarksEdit: function (id) {
-    app.views.bookmarks.edit(id);
-    return this;
-  },
-  bookmarksDelete: function (id) {
-    app.views.bookmarks.delete(id);
-    return this;
-  },
-  tags: function () {
-    app.views.tags.index();
-    return this;
-  },
-  tagsAdd: function () {
-    app.views.tags.add();
-    return this;
-  },
-  tagsView: function (id) {
-    app.views.tags.view(id);
-    return this;
-  },
-  tagsEdit: function (id) {
-    app.views.tags.edit(id);
-    return this;
-  },
-  tagsDelete: function (id) {
-    app.views.tags.delete(id);
-    return this;
-  }
+  toppage: () => app.router.navigate('bookmarks', { trigger: true }),
+  bookmarks: () => app.views.bookmarks.index(),
+  bookmarksAdd: () => app.views.bookmarks.add(),
+  bookmarksView: (id) => app.views.bookmarks.view(id),
+  bookmarksEdit: (id) => app.views.bookmarks.edit(id),
+  bookmarksDelete: (id) => app.views.bookmarks.delete(id),
+  tags: () => app.views.tags.index(),
+  tagsAdd: () => app.views.tags.add(),
+  tagsView: (id) => app.views.tags.view(id),
+  tagsEdit: (id) => app.views.tags.edit(id),
+  tagsDelete: (id) => app.views.tags.delete(id),
 });

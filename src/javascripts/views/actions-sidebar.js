@@ -1,11 +1,9 @@
-app.views.ActionsSidebar = Backbone.View.extend({
+import _ from 'underscore';
+import { View } from 'backbone';
+
+export default View.extend({
   el: '#actions-sidebar',
-  initialize: function () {
-    return this;
-  },
-  linksTemplate: _.template('<li class="heading">Actions</li><% _.each(linkObjs, function(linkObj) { %><li><a href="<%= linkObj.href %>"><%= linkObj.text %></a></li><% }); %>'),
-  setLinks: function (linkObjs) {
-    this.$('.side-nav').html(this.linksTemplate({linkObjs: linkObjs}));
-    return this;
-  }
+  linksTemplate: _.template('tmp-layouts.actions-sidebar'),
+  setLinks: (linkObjs) =>
+    this.$('.side-nav').html(this.linksTemplate({ linkObjs: linkObjs })),
 });

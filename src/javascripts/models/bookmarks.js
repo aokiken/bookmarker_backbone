@@ -1,12 +1,13 @@
-app.models.Bookmarks = Backbone.Model.extend({
+import { Model } from 'backbone';
+import moment from 'moment';
+
+export default Model.extend({
   defaults: {
     title: '',
     description: '',
     url: '',
     created: Date.now(),
-    modified: Date.now()
+    modified: Date.now(),
   },
-  dateFormat: function (columnName) {
-    return moment(this.get(columnName)).format("YYYY/MM/DD, h:mm a");
-  }
+  dateFormat: (columnName) => moment(this.get(columnName)).format('YYYY/MM/DD, h:mm a'),
 });

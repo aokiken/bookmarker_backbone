@@ -1,10 +1,6 @@
-app.views.Main = Backbone.View.extend({
+import { View } from 'backbone';
+
+export default View.extend({
   el: '#main',
-  initialize: function () {
-    return this;
-  },
-  changeContent: function (dom) {
-    this.$el.html(dom);
-    return this;
-  }
+  changeContent: (dom) => this.$el.html(dom),
 });

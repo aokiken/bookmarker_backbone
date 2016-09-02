@@ -1,29 +1,25 @@
-app.collections.Tags = Backbone.Collection.extend({
-  model: app.models.Tags,
+import { Collection } from 'backbone';
+import Store from 'backbone.localstorage';
+import ModelTags from '../models/tags';
+import app from '../app';
+
+export default Collection.extend({
+  model: ModelTags,
   localStorage: new Store('tags'),
-  initialize: function () {
+  initialize: () => {
     this.on('add', this.addHook);
     this.on('edit', this.addHook);
     this.on('remove', this.removeHook);
     this.fetch();
     return this;
   },
-  addHook: function (tag) {
-    tag.save();
-    return this;
-  },
-  editHook: function (tag) {
-    tag.save();
-    return this;
-  },
-  removeHook: function (tag) {
-    tag.destroy();
-    return this;
-  },
-  serializeArrayFormat: function (data) {
-    var result = {};
-    data.forEach(function (item) {
-      var isArray = item.name.indexOf('[]') > -1;
+  addHook: (tag) => tag.save(),
+  editHook: (tag) => tag.save(),
+  removeHook: (tag) => tag.destroy(),
+  serializeArrayFormat: (data) => {
+    const result = {};
+    data.forEach((item) => {
+      const isArray = item.name.indexOf('[]') > -1;
       if (isArray) {
         item.name = item.name.replace('[]', '');
         result[item.name] = result[item.name] ? result[item.name] : [];
@@ -34,64 +30,64 @@ app.collections.Tags = Backbone.Collection.extend({
     });
     return result;
   },
-  addSubmit: function (data) {
+  addSubmit: (data) => {
     data = this.serializeArrayFormat(data);
-    var bookmark_ids = ('bookmark_ids' in data) ? data['bookmark_ids'] : [];
-    delete data['bookmark_ids'];
-    var tag = this.add(data);
+    const bookmarkIds = ('bookmark_ids' in data) ? data.bookmark_ids : [];
+    delete data.bookmark_ids;
+    const tag = this.add(data);
     if (tag) {
-      bookmark_ids.forEach(function (bookmark_id) {
+      bookmarkIds.forEach((bookmarkId) =>
         app.collections.bookmarksTags.add({
-          bookmark_id: bookmark_id,
-          tag_id: tag.id
-        });
-      });
+          bookmark_id: bookmarkId,
+          tag_id: tag.id,
+        })
+      );
     }
     return this;
   },
-  editSubmit: function (data) {
+  editSubmit: (data) => {
     data = this.serializeArrayFormat(data);
-    var tag = app.collections.tags.get(data.id);
-    var bookmarksTags = app.collections.bookmarksTags.find({tag_id: data.id});
-    var bookmark_ids = ('bookmark_ids' in data) ? data['bookmark_ids'] : [];
-    delete data['bookmark_ids'];
+    const tag = app.collections.tags.get(data.id);
+    const bookmarksTags = app.collections.bookmarksTags.find({ tag_id: data.id });
+    const bookmarkIds = ('bookmark_ids' in data) ? data.bookmark_ids : [];
+    delete data.bookmark_ids;
     tag.set(data);
 
     if (tag) {
       app.collections.bookmarksTags.remove(bookmarksTags);
-      bookmark_ids.forEach(function (bookmark_id) {
+      bookmarkIds.forEach((bookmarkId) =>
         app.collections.bookmarksTags.add({
-          bookmark_id: bookmark_id,
-          tag_id: tag.id
-        });
-      });
+          bookmark_id: bookmarkId,
+          tag_id: tag.id,
+        })
+      );
     }
     return this;
   },
-  view: function (id) {
-    var tag = this.get(id);
-    var bookmarksTags = app.collections.bookmarksTags.where({tag_id: String(tag.attributes.id)});
-    tag.attributes.bookmarks = [];
-    bookmarksTags.forEach(function (item) {
-      tag.attributes.bookmarks.push(app.collections.bookmarks.get(item.attributes.bookmark_id));
+  view: (id) => {
+    const tag = this.get(id);
+    const bookmarksTags = app.collections.bookmarksTags.where({
+      tag_id: String(tag.attributes.id),
     });
+    tag.attributes.bookmarks = [];
+    bookmarksTags.forEach((item) =>
+      tag.attributes.bookmarks.push(app.collections.bookmarks.get(item.attributes.bookmark_id)));
     return tag;
   },
-  edit: function (id) {
-    var tag = this.get(id);
-    var bookmarksTags = app.collections.bookmarksTags.where({tag_id: String(tag.attributes.id)});
-    tag.attributes.bookmarks = [];
-    bookmarksTags.forEach(function (item) {
-      tag.attributes.bookmarks.push(app.collections.bookmarks.get(item.attributes.bookmark_id));
+  edit: (id) => {
+    const tag = this.get(id);
+    const bookmarksTags = app.collections.bookmarksTags.where({
+      tag_id: String(tag.attributes.id),
     });
+    tag.attributes.bookmarks = [];
+    bookmarksTags.forEach((item) =>
+      tag.attributes.bookmarks.push(app.collections.bookmarks.get(item.attributes.bookmark_id)));
     return tag;
   },
-  delete: function (id) {
+  delete: (id) => {
     this.remove(id);
-    var bookmarkTags = app.collections.bookmarksTags.where({tag_id: String(id)});
-    bookmarkTags.forEach(function (item) {
-      item.destroy();
-    });
+    const bookmarkTags = app.collections.bookmarksTags.where({ tag_id: String(id) });
+    bookmarkTags.forEach((item) => item.destroy());
     return this;
-  }
+  },
 });

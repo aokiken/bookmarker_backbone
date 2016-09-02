@@ -1,83 +1,92 @@
-app.views.Tags = Backbone.View.extend({
-  initialize: function () {
-    return this;
-  },
+import _ from 'underscore';
+import { View } from 'backbone';
+import app from '../app';
+
+export default View.extend({
   // event functions
-  addSubmit: function (e) {
+  addSubmit: (e) => {
     e.preventDefault();
-    var data = this.$('#tag_add').serializeArray();
+    const data = this.$('#tag_add').serializeArray();
     app.collections.tags.addSubmit(data);
-    app.router.navigate('tags', {trigger: true});
+    app.router.navigate('tags', { trigger: true });
     return this;
   },
-  editSubmit: function (e) {
+  editSubmit: (e) => {
     e.preventDefault();
-    var data = this.$('#tag_edit').serializeArray();
+    const data = this.$('#tag_edit').serializeArray();
     app.collections.tags.editSubmit(data);
-    app.router.navigate('tags', {trigger: true});
+    app.router.navigate('tags', { trigger: true });
     return this;
   },
 
   // actions
-  index: function () {
-    app.views.topBar.setTitle({href: './#tags', text: 'tags'});
+  index: () => {
+    app.views.topBar.setTitle({ href: './#tags', text: 'tags' });
     app.views.actionsSidebar.setLinks([
-      {href: './#tags/add', text: 'New Tag'},
-      {href: './#bookmarks', text: 'List Bookmarks'},
-      {href: './#bookmarks/add', text: 'New Bookmark'}
+      { href: './#tags/add', text: 'New Tag' },
+      { href: './#bookmarks', text: 'List Bookmarks' },
+      { href: './#bookmarks/add', text: 'New Bookmark' },
     ]);
-    app.views.main.changeContent(_.template('tmp-tags.index')({tags: app.collections.tags.models}));
-    return this;
-  },
-  add: function () {
-    this.events = {'submit #tag_add': 'addSubmit'};
-    app.views.topBar.setTitle({href: './#tags/add', text: 'Tags'});
-    app.views.actionsSidebar.setLinks([
-      {href: './#tags', text: 'List Tags'},
-      {href: './#bookmarks', text: 'List Bookmarks'},
-      {href: './#bookmarks/add', text: 'New Bookmark'}
-    ]);
-    this.$el.html(_.template('tmp-tags.add')({bookmarks: app.collections.bookmarks.models}));
-    app.views.main.changeContent(this.el);
+    app.views.main.changeContent(_.template('tmp-tags.index')({
+      tags: app.collections.tags.models,
+    }));
+    this.events = {};
     this.delegateEvents();
     return this;
   },
-  view: function (id) {
-    var tag = app.collections.tags.view(id);
-    app.views.topBar.setTitle({href: './#tags/view', text: 'Tags'});
+  add: () => {
+    app.views.topBar.setTitle({ href: './#tags/add', text: 'Tags' });
     app.views.actionsSidebar.setLinks([
-      {href: './#tags/edit/' + id, text: 'Edit Tag'},
-      {href: './#tags/delete/' + id, text: 'Delete Tag'},
-      {href: './#tags', text: 'List Tags'},
-      {href: './#tags/add', text: 'New Tag'},
-      {href: './#bookmarks', text: 'List Bookmarks'},
-      {href: './#bookmarks/add', text: 'New Bookmark'}
+      { href: './#tags', text: 'List Tags' },
+      { href: './#bookmarks', text: 'List Bookmarks' },
+      { href: './#bookmarks/add', text: 'New Bookmark' },
     ]);
-    app.views.main.changeContent(_.template('tmp-tags.view')({tag: tag}));
+    this.$el.html(_.template('tmp-tags.add')({ bookmarks: app.collections.bookmarks.models }));
+    app.views.main.changeContent(this.el);
+    this.events = { 'submit #tag_add': 'addSubmit' };
+    this.delegateEvents();
     return this;
   },
-  edit: function (id) {
-    this.events = {'submit #tag_edit': 'editSubmit'};
-    var tag = app.collections.tags.edit(id);
-    app.views.topBar.setTitle({href: './#tags/edit', text: 'Tags'});
+  view: (id) => {
+    const tag = app.collections.tags.view(id);
+    app.views.topBar.setTitle({ href: './#tags/view', text: 'Tags' });
     app.views.actionsSidebar.setLinks([
-      {href: './#tags/delete/' + id, text: 'Delete'},
-      {href: './#tags', text: 'List Tags'},
-      {href: './#bookmarks', text: 'List Bookmarks'},
-      {href: './#bookmarks/add', text: 'New Bookmark'}
+      { href: `./#tags/edit/${id}`, text: 'Edit Tag' },
+      { href: `./#tags/delete/${id}`, text: 'Delete Tag' },
+      { href: './#tags', text: 'List Tags' },
+      { href: './#tags/add', text: 'New Tag' },
+      { href: './#bookmarks', text: 'List Bookmarks' },
+      { href: './#bookmarks/add', text: 'New Bookmark' },
+    ]);
+    app.views.main.changeContent(_.template('tmp-tags.view')({ tag: tag }));
+    this.events = {};
+    this.delegateEvents();
+    return this;
+  },
+  edit: (id) => {
+    const tag = app.collections.tags.edit(id);
+    app.views.topBar.setTitle({ href: './#tags/edit', text: 'Tags' });
+    app.views.actionsSidebar.setLinks([
+      { href: `./#tags/delete/${id}`, text: 'Delete' },
+      { href: './#tags', text: 'List Tags' },
+      { href: './#bookmarks', text: 'List Bookmarks' },
+      { href: './#bookmarks/add', text: 'New Bookmark' },
     ]);
     this.$el.html(_.template('tmp-tags.edit')({
       tag: tag,
       relatedTags: _.pluck(tag.attributes.bookmarks, 'id'),
-      bookmarks: app.collections.bookmarks.models
+      bookmarks: app.collections.bookmarks.models,
     }));
     app.views.main.changeContent(this.el);
+    this.events = { 'submit #tag_edit': 'editSubmit' };
     this.delegateEvents();
     return this;
   },
-  delete: function (id) {
+  delete: (id) => {
     app.collections.tags.delete(id);
-    app.router.navigate('tags', {trigger: true});
+    app.router.navigate('tags', { trigger: true });
+    this.events = {};
+    this.delegateEvents();
     return this;
-  }
+  },
 });

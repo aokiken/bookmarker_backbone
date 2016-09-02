@@ -1,0 +1,4 @@
+li.heading Actions
+<% _.each(linkObjs, function(linkObj) { %>
+li:a(href!="<%= linkObj.href %>") <%= linkObj.text %>
+<% }); %>
