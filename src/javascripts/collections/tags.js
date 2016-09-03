@@ -6,7 +6,7 @@ import app from '../app';
 export default Collection.extend({
   model: ModelTags,
   localStorage: new Store('tags'),
-  initialize: () => {
+  initialize() {
     this.on('add', this.addHook);
     this.on('edit', this.addHook);
     this.on('remove', this.removeHook);
@@ -16,7 +16,7 @@ export default Collection.extend({
   addHook: (tag) => tag.save(),
   editHook: (tag) => tag.save(),
   removeHook: (tag) => tag.destroy(),
-  serializeArrayFormat: (data) => {
+  serializeArrayFormat(data) {
     const result = {};
     data.forEach((item) => {
       const isArray = item.name.indexOf('[]') > -1;
@@ -30,7 +30,7 @@ export default Collection.extend({
     });
     return result;
   },
-  addSubmit: (data) => {
+  addSubmit(data) {
     data = this.serializeArrayFormat(data);
     const bookmarkIds = ('bookmark_ids' in data) ? data.bookmark_ids : [];
     delete data.bookmark_ids;
@@ -45,7 +45,7 @@ export default Collection.extend({
     }
     return this;
   },
-  editSubmit: (data) => {
+  editSubmit(data) {
     data = this.serializeArrayFormat(data);
     const tag = app.collections.tags.get(data.id);
     const bookmarksTags = app.collections.bookmarksTags.find({ tag_id: data.id });
@@ -64,7 +64,7 @@ export default Collection.extend({
     }
     return this;
   },
-  view: (id) => {
+  view(id) {
     const tag = this.get(id);
     const bookmarksTags = app.collections.bookmarksTags.where({
       tag_id: String(tag.attributes.id),
@@ -74,7 +74,7 @@ export default Collection.extend({
       tag.attributes.bookmarks.push(app.collections.bookmarks.get(item.attributes.bookmark_id)));
     return tag;
   },
-  edit: (id) => {
+  edit(id) {
     const tag = this.get(id);
     const bookmarksTags = app.collections.bookmarksTags.where({
       tag_id: String(tag.attributes.id),
@@ -84,7 +84,7 @@ export default Collection.extend({
       tag.attributes.bookmarks.push(app.collections.bookmarks.get(item.attributes.bookmark_id)));
     return tag;
   },
-  delete: (id) => {
+  delete(id) {
     this.remove(id);
     const bookmarkTags = app.collections.bookmarksTags.where({ tag_id: String(id) });
     bookmarkTags.forEach((item) => item.destroy());

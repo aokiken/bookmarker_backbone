@@ -4,14 +4,14 @@ import app from '../app';
 
 export default View.extend({
   // event functions
-  addSubmit: (e) => {
+  addSubmit(e) {
     e.preventDefault();
     const data = this.$('#bookmark_add').serializeArray();
     app.collections.bookmarks.addSubmit(data);
     app.router.navigate('bookmarks', { trigger: true });
     return this;
   },
-  editSubmit: (e) => {
+  editSubmit(e) {
     e.preventDefault();
     const data = this.$('#bookmark_edit').serializeArray();
     app.collections.bookmarks.editSubmit(data);
@@ -20,7 +20,7 @@ export default View.extend({
   },
 
   // actions
-  index: () => {
+  index() {
     app.views.topBar.setTitle({ href: './#bookmarks', text: 'Bookmarks' });
     app.views.actionsSidebar.setLinks([
       { href: './#bookmarks/add', text: 'New Bookmark' },
@@ -35,7 +35,7 @@ export default View.extend({
     this.delegateEvents();
     return this;
   },
-  add: () => {
+  add() {
     app.views.topBar.setTitle({ href: './#bookmarks/add', text: 'Bookmarks' });
     app.views.actionsSidebar.setLinks([
       { href: './#bookmarks', text: 'List Bookmarks' },
@@ -48,7 +48,7 @@ export default View.extend({
     this.delegateEvents();
     return this;
   },
-  view: (id) => {
+  view(id) {
     const bookmark = app.collections.bookmarks.view(id);
     app.views.topBar.setTitle({ href: `./#bookmarks/view/${id}`, text: 'Bookmarks' });
     app.views.actionsSidebar.setLinks([
@@ -65,7 +65,7 @@ export default View.extend({
     this.delegateEvents();
     return this;
   },
-  edit: (id) => {
+  edit(id) {
     const bookmark = app.collections.bookmarks.edit(id);
     app.views.topBar.setTitle({ href: `./#bookmarks/edit/${id}`, text: 'Bookmarks' });
     app.views.actionsSidebar.setLinks([
@@ -84,7 +84,7 @@ export default View.extend({
     this.delegateEvents();
     return this;
   },
-  delete: (id) => {
+  delete(id) {
     app.collections.bookmarks.delete(id);
     app.router.navigate('bookmarks', { trigger: true });
     this.events = {};

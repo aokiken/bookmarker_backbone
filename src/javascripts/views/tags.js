@@ -4,14 +4,14 @@ import app from '../app';
 
 export default View.extend({
   // event functions
-  addSubmit: (e) => {
+  addSubmit(e) {
     e.preventDefault();
     const data = this.$('#tag_add').serializeArray();
     app.collections.tags.addSubmit(data);
     app.router.navigate('tags', { trigger: true });
     return this;
   },
-  editSubmit: (e) => {
+  editSubmit(e) {
     e.preventDefault();
     const data = this.$('#tag_edit').serializeArray();
     app.collections.tags.editSubmit(data);
@@ -20,7 +20,7 @@ export default View.extend({
   },
 
   // actions
-  index: () => {
+  index() {
     app.views.topBar.setTitle({ href: './#tags', text: 'tags' });
     app.views.actionsSidebar.setLinks([
       { href: './#tags/add', text: 'New Tag' },
@@ -34,7 +34,7 @@ export default View.extend({
     this.delegateEvents();
     return this;
   },
-  add: () => {
+  add() {
     app.views.topBar.setTitle({ href: './#tags/add', text: 'Tags' });
     app.views.actionsSidebar.setLinks([
       { href: './#tags', text: 'List Tags' },
@@ -47,7 +47,7 @@ export default View.extend({
     this.delegateEvents();
     return this;
   },
-  view: (id) => {
+  view(id) {
     const tag = app.collections.tags.view(id);
     app.views.topBar.setTitle({ href: './#tags/view', text: 'Tags' });
     app.views.actionsSidebar.setLinks([
@@ -63,7 +63,7 @@ export default View.extend({
     this.delegateEvents();
     return this;
   },
-  edit: (id) => {
+  edit(id) {
     const tag = app.collections.tags.edit(id);
     app.views.topBar.setTitle({ href: './#tags/edit', text: 'Tags' });
     app.views.actionsSidebar.setLinks([
@@ -82,7 +82,7 @@ export default View.extend({
     this.delegateEvents();
     return this;
   },
-  delete: (id) => {
+  delete(id) {
     app.collections.tags.delete(id);
     app.router.navigate('tags', { trigger: true });
     this.events = {};

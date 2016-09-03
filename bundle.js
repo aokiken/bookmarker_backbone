@@ -18057,14 +18057,14 @@ var _router2 = _interopRequireDefault(_router);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var _App = function App() {
+var App = function Application() {
   var instance = void 0;
-  _App = function App() {
+  App = function App() {
     return instance;
   };
-  _App.prototype = undefined;
-  instance = new _App();
-  instance.constructor = _App;
+  App.prototype = this;
+  instance = new App();
+  instance.constructor = App;
 
   instance.views = {};
   instance.models = {};
@@ -18088,10 +18088,10 @@ var _App = function App() {
 };
 
 (0, _jquery2.default)(function () {
-  return new _App().initialize();
+  return new App().initialize();
 });
 
-exports.default = new _App();
+exports.default = new App();
 
 },{"./collections/bookmarks":7,"./collections/bookmarks_tags":8,"./collections/tags":9,"./routes/router":13,"./views/actions-sidebar":14,"./views/bookmarks":15,"./views/main":16,"./views/tags":17,"./views/top-bar":18,"backbone":2,"jquery":3}],7:[function(require,module,exports){
 'use strict';
@@ -18120,12 +18120,13 @@ exports.default = _backbone.Collection.extend({
   model: _bookmarks2.default,
   localStorage: new _backbone3.default('bookmarks'),
   initialize: function initialize() {
-    undefined.on('add', undefined.addHook);
-    undefined.on('change', undefined.changeHook);
-    undefined.on('remove', undefined.removeHook);
-    undefined.fetch();
-    return undefined;
+    this.on('add', this.addHook);
+    this.on('change', this.changeHook);
+    this.on('remove', this.removeHook);
+    this.fetch();
+    return this;
   },
+
   addHook: function addHook(bookmark) {
     return bookmark.save();
   },
@@ -18135,7 +18136,6 @@ exports.default = _backbone.Collection.extend({
   removeHook: function removeHook(bookmark) {
     return bookmark.destroy();
   },
-
   serializeArrayFormat: function serializeArrayFormat(data) {
     var result = {};
     data.forEach(function (item) {
@@ -18151,10 +18151,10 @@ exports.default = _backbone.Collection.extend({
     return result;
   },
   addSubmit: function addSubmit(data) {
-    data = undefined.serializeArrayFormat(data);
+    data = this.serializeArrayFormat(data);
     var tagIds = 'tag_ids' in data ? data.tag_ids : [];
     delete data.tag_ids;
-    var bookmark = undefined.add(data);
+    var bookmark = this.add(data);
     if (bookmark) {
       tagIds.forEach(function (tagId) {
         _app2.default.collections.bookmarksTags.add({
@@ -18163,10 +18163,10 @@ exports.default = _backbone.Collection.extend({
         });
       });
     }
-    return undefined;
+    return this;
   },
   editSubmit: function editSubmit(data) {
-    data = undefined.serializeArrayFormat(data);
+    data = this.serializeArrayFormat(data);
     var bookmark = _app2.default.collections.bookmarks.get(data.id);
     var bookmarksTags = _app2.default.collections.bookmarksTags.find({ bookmark_id: data.id });
     var tagIds = 'tag_ids' in data ? data.tag_ids : [];
@@ -18181,10 +18181,10 @@ exports.default = _backbone.Collection.extend({
         });
       });
     }
-    return undefined;
+    return this;
   },
   view: function view(id) {
-    var bookmark = undefined.get(id);
+    var bookmark = this.get(id);
     var bookmarksTags = _app2.default.collections.bookmarksTags.where({
       bookmark_id: String(bookmark.attributes.id)
     });
@@ -18195,7 +18195,7 @@ exports.default = _backbone.Collection.extend({
     return bookmark;
   },
   edit: function edit(id) {
-    var bookmark = undefined.get(id);
+    var bookmark = this.get(id);
     var bookmarksTags = _app2.default.collections.bookmarksTags.where({
       bookmark_id: String(bookmark.attributes.id)
     });
@@ -18206,7 +18206,7 @@ exports.default = _backbone.Collection.extend({
     return bookmark;
   },
   delete: function _delete(id) {
-    undefined.remove(id);
+    this.remove(id);
     var bookmarkTags = _app2.default.collections.bookmarksTags.where({
       bookmark_id: String(id)
     });
@@ -18239,11 +18239,12 @@ exports.default = _backbone.Collection.extend({
   model: _bookmarks_tags2.default,
   localStorage: new _backbone3.default('bookmarksTags'),
   initialize: function initialize() {
-    undefined.on('add', undefined.addHook);
-    undefined.on('remove', undefined.removeHook);
-    undefined.fetch();
-    return undefined;
+    this.on('add', this.addHook);
+    this.on('remove', this.removeHook);
+    this.fetch();
+    return this;
   },
+
   addHook: function addHook(bookmarksTags) {
     return bookmarksTags.save();
   },
@@ -18279,12 +18280,13 @@ exports.default = _backbone.Collection.extend({
   model: _tags2.default,
   localStorage: new _backbone3.default('tags'),
   initialize: function initialize() {
-    undefined.on('add', undefined.addHook);
-    undefined.on('edit', undefined.addHook);
-    undefined.on('remove', undefined.removeHook);
-    undefined.fetch();
-    return undefined;
+    this.on('add', this.addHook);
+    this.on('edit', this.addHook);
+    this.on('remove', this.removeHook);
+    this.fetch();
+    return this;
   },
+
   addHook: function addHook(tag) {
     return tag.save();
   },
@@ -18309,10 +18311,10 @@ exports.default = _backbone.Collection.extend({
     return result;
   },
   addSubmit: function addSubmit(data) {
-    data = undefined.serializeArrayFormat(data);
+    data = this.serializeArrayFormat(data);
     var bookmarkIds = 'bookmark_ids' in data ? data.bookmark_ids : [];
     delete data.bookmark_ids;
-    var tag = undefined.add(data);
+    var tag = this.add(data);
     if (tag) {
       bookmarkIds.forEach(function (bookmarkId) {
         return _app2.default.collections.bookmarksTags.add({
@@ -18321,10 +18323,10 @@ exports.default = _backbone.Collection.extend({
         });
       });
     }
-    return undefined;
+    return this;
   },
   editSubmit: function editSubmit(data) {
-    data = undefined.serializeArrayFormat(data);
+    data = this.serializeArrayFormat(data);
     var tag = _app2.default.collections.tags.get(data.id);
     var bookmarksTags = _app2.default.collections.bookmarksTags.find({ tag_id: data.id });
     var bookmarkIds = 'bookmark_ids' in data ? data.bookmark_ids : [];
@@ -18340,10 +18342,10 @@ exports.default = _backbone.Collection.extend({
         });
       });
     }
-    return undefined;
+    return this;
   },
   view: function view(id) {
-    var tag = undefined.get(id);
+    var tag = this.get(id);
     var bookmarksTags = _app2.default.collections.bookmarksTags.where({
       tag_id: String(tag.attributes.id)
     });
@@ -18354,7 +18356,7 @@ exports.default = _backbone.Collection.extend({
     return tag;
   },
   edit: function edit(id) {
-    var tag = undefined.get(id);
+    var tag = this.get(id);
     var bookmarksTags = _app2.default.collections.bookmarksTags.where({
       tag_id: String(tag.attributes.id)
     });
@@ -18365,12 +18367,12 @@ exports.default = _backbone.Collection.extend({
     return tag;
   },
   delete: function _delete(id) {
-    undefined.remove(id);
+    this.remove(id);
     var bookmarkTags = _app2.default.collections.bookmarksTags.where({ tag_id: String(id) });
     bookmarkTags.forEach(function (item) {
       return item.destroy();
     });
-    return undefined;
+    return this;
   }
 });
 
@@ -18398,7 +18400,7 @@ exports.default = _backbone.Model.extend({
     modified: Date.now()
   },
   dateFormat: function dateFormat(columnName) {
-    return (0, _moment2.default)(undefined.get(columnName)).format('YYYY/MM/DD, h:mm a');
+    return (0, _moment2.default)(this.attributes[columnName]).format('YYYY/MM/DD, h:mm a');
   }
 });
 
@@ -18440,7 +18442,7 @@ exports.default = _backbone.Model.extend({
     modified: Date.now()
   },
   dateFormat: function dateFormat(columnName) {
-    return (0, _moment2.default)(undefined.get(columnName)).format('YYYY/MM/DD, h:mm a');
+    return (0, _moment2.default)(this.attributes[columnName]).format('YYYY/MM/DD, h:mm a');
   }
 });
 
@@ -18528,7 +18530,7 @@ exports.default = _backbone.View.extend({
   el: '#actions-sidebar',
   linksTemplate: _underscore2.default.template('tmp-layouts.actions-sidebar'),
   setLinks: function setLinks(linkObjs) {
-    return undefined.$('.side-nav').html(undefined.linksTemplate({ linkObjs: linkObjs }));
+    this.$('.side-nav').html(this.linksTemplate({ linkObjs: linkObjs }));
   }
 });
 
@@ -18555,70 +18557,71 @@ exports.default = _backbone.View.extend({
   // event functions
   addSubmit: function addSubmit(e) {
     e.preventDefault();
-    var data = undefined.$('#bookmark_add').serializeArray();
+    var data = this.$('#bookmark_add').serializeArray();
     _app2.default.collections.bookmarks.addSubmit(data);
     _app2.default.router.navigate('bookmarks', { trigger: true });
-    return undefined;
+    return this;
   },
   editSubmit: function editSubmit(e) {
     e.preventDefault();
-    var data = undefined.$('#bookmark_edit').serializeArray();
+    var data = this.$('#bookmark_edit').serializeArray();
     _app2.default.collections.bookmarks.editSubmit(data);
     _app2.default.router.navigate('bookmarks', { trigger: true });
-    return undefined;
+    return this;
   },
+
 
   // actions
   index: function index() {
     _app2.default.views.topBar.setTitle({ href: './#bookmarks', text: 'Bookmarks' });
     _app2.default.views.actionsSidebar.setLinks([{ href: './#bookmarks/add', text: 'New Bookmark' }, { href: './#tags', text: 'List Tags' }, { href: './#tags/add', text: 'New Tag' }]);
-    undefined.$el.html(_underscore2.default.template('tmp-bookmarks.index')({
+    this.$el.html(_underscore2.default.template('tmp-bookmarks.index')({
       bookmarks: _app2.default.collections.bookmarks.models
     }));
-    _app2.default.views.main.changeContent(undefined.el);
-    undefined.events = {};
-    undefined.delegateEvents();
-    return undefined;
+    _app2.default.views.main.changeContent(this.el);
+    this.events = {};
+    this.delegateEvents();
+    return this;
   },
   add: function add() {
     _app2.default.views.topBar.setTitle({ href: './#bookmarks/add', text: 'Bookmarks' });
     _app2.default.views.actionsSidebar.setLinks([{ href: './#bookmarks', text: 'List Bookmarks' }, { href: './#tags', text: 'List Tags' }, { href: './#tags/add', text: 'New Tag' }]);
-    undefined.$el.html(_underscore2.default.template('tmp-bookmarks.add')({ tags: _app2.default.collections.tags.models }));
-    _app2.default.views.main.changeContent(undefined.el);
-    undefined.events = { 'submit #bookmark_add': 'addSubmit' };
-    undefined.delegateEvents();
-    return undefined;
+    this.$el.html(_underscore2.default.template('tmp-bookmarks.add')({ tags: _app2.default.collections.tags.models }));
+    _app2.default.views.main.changeContent(this.el);
+    this.events = { 'submit #bookmark_add': 'addSubmit' };
+    this.delegateEvents();
+    return this;
   },
   view: function view(id) {
     var bookmark = _app2.default.collections.bookmarks.view(id);
     _app2.default.views.topBar.setTitle({ href: './#bookmarks/view/' + id, text: 'Bookmarks' });
     _app2.default.views.actionsSidebar.setLinks([{ href: './#bookmarks/edit/' + id, text: 'Edit Bookmark' }, { href: './#bookmarks/delete/' + id, text: 'Delete Bookmark' }, { href: './#bookmarks', text: 'List Bookmarks' }, { href: './#bookmarks/add', text: 'New Bookmark' }, { href: './#tags', text: 'List Tags' }, { href: './#tags/add', text: 'New Tag' }]);
-    undefined.$el.html(_underscore2.default.template('tmp-bookmarks.view')({ bookmark: bookmark }));
-    _app2.default.views.main.changeContent(undefined.el);
-    undefined.events = {};
-    undefined.delegateEvents();
-    return undefined;
+    this.$el.html(_underscore2.default.template('tmp-bookmarks.view')({ bookmark: bookmark }));
+    _app2.default.views.main.changeContent(this.el);
+    this.events = {};
+    this.delegateEvents();
+    return this;
   },
   edit: function edit(id) {
     var bookmark = _app2.default.collections.bookmarks.edit(id);
     _app2.default.views.topBar.setTitle({ href: './#bookmarks/edit/' + id, text: 'Bookmarks' });
     _app2.default.views.actionsSidebar.setLinks([{ href: './#bookmarks/delete/' + id, text: 'Delete' }, { href: './#bookmarks', text: 'List Bookmarks' }, { href: './#tags', text: 'List Tags' }, { href: './#tags/add', text: 'New Tag' }]);
-    undefined.$el.html(_underscore2.default.template('tmp-bookmarks.edit')({
+    this.$el.html(_underscore2.default.template('tmp-bookmarks.edit')({
       bookmark: bookmark,
       relatedTags: _underscore2.default.pluck(bookmark.attributes.tags, 'id'),
       tags: _app2.default.collections.tags.models
     }));
-    _app2.default.views.main.changeContent(undefined.el);
-    undefined.events = { 'submit #bookmark_edit': 'editSubmit' };
-    undefined.delegateEvents();
-    return undefined;
+    _app2.default.views.main.changeContent(this.el);
+    this.events = { 'submit #bookmark_edit': 'editSubmit' };
+    this.delegateEvents();
+    return this;
   },
   delete: function _delete(id) {
     _app2.default.collections.bookmarks.delete(id);
     _app2.default.router.navigate('bookmarks', { trigger: true });
-    undefined.events = {};
-    undefined.delegateEvents();
-    return undefined;
+    this.events = {};
+    this.delegateEvents();
+    return this;
   }
 });
 
@@ -18634,7 +18637,7 @@ var _backbone = require('backbone');
 exports.default = _backbone.View.extend({
   el: '#main',
   changeContent: function changeContent(dom) {
-    return undefined.$el.html(dom);
+    this.$el.html(dom);
   }
 });
 
@@ -18661,18 +18664,19 @@ exports.default = _backbone.View.extend({
   // event functions
   addSubmit: function addSubmit(e) {
     e.preventDefault();
-    var data = undefined.$('#tag_add').serializeArray();
+    var data = this.$('#tag_add').serializeArray();
     _app2.default.collections.tags.addSubmit(data);
     _app2.default.router.navigate('tags', { trigger: true });
-    return undefined;
+    return this;
   },
   editSubmit: function editSubmit(e) {
     e.preventDefault();
-    var data = undefined.$('#tag_edit').serializeArray();
+    var data = this.$('#tag_edit').serializeArray();
     _app2.default.collections.tags.editSubmit(data);
     _app2.default.router.navigate('tags', { trigger: true });
-    return undefined;
+    return this;
   },
+
 
   // actions
   index: function index() {
@@ -18681,48 +18685,48 @@ exports.default = _backbone.View.extend({
     _app2.default.views.main.changeContent(_underscore2.default.template('tmp-tags.index')({
       tags: _app2.default.collections.tags.models
     }));
-    undefined.events = {};
-    undefined.delegateEvents();
-    return undefined;
+    this.events = {};
+    this.delegateEvents();
+    return this;
   },
   add: function add() {
     _app2.default.views.topBar.setTitle({ href: './#tags/add', text: 'Tags' });
     _app2.default.views.actionsSidebar.setLinks([{ href: './#tags', text: 'List Tags' }, { href: './#bookmarks', text: 'List Bookmarks' }, { href: './#bookmarks/add', text: 'New Bookmark' }]);
-    undefined.$el.html(_underscore2.default.template('tmp-tags.add')({ bookmarks: _app2.default.collections.bookmarks.models }));
-    _app2.default.views.main.changeContent(undefined.el);
-    undefined.events = { 'submit #tag_add': 'addSubmit' };
-    undefined.delegateEvents();
-    return undefined;
+    this.$el.html(_underscore2.default.template('tmp-tags.add')({ bookmarks: _app2.default.collections.bookmarks.models }));
+    _app2.default.views.main.changeContent(this.el);
+    this.events = { 'submit #tag_add': 'addSubmit' };
+    this.delegateEvents();
+    return this;
   },
   view: function view(id) {
     var tag = _app2.default.collections.tags.view(id);
     _app2.default.views.topBar.setTitle({ href: './#tags/view', text: 'Tags' });
     _app2.default.views.actionsSidebar.setLinks([{ href: './#tags/edit/' + id, text: 'Edit Tag' }, { href: './#tags/delete/' + id, text: 'Delete Tag' }, { href: './#tags', text: 'List Tags' }, { href: './#tags/add', text: 'New Tag' }, { href: './#bookmarks', text: 'List Bookmarks' }, { href: './#bookmarks/add', text: 'New Bookmark' }]);
     _app2.default.views.main.changeContent(_underscore2.default.template('tmp-tags.view')({ tag: tag }));
-    undefined.events = {};
-    undefined.delegateEvents();
-    return undefined;
+    this.events = {};
+    this.delegateEvents();
+    return this;
   },
   edit: function edit(id) {
     var tag = _app2.default.collections.tags.edit(id);
     _app2.default.views.topBar.setTitle({ href: './#tags/edit', text: 'Tags' });
     _app2.default.views.actionsSidebar.setLinks([{ href: './#tags/delete/' + id, text: 'Delete' }, { href: './#tags', text: 'List Tags' }, { href: './#bookmarks', text: 'List Bookmarks' }, { href: './#bookmarks/add', text: 'New Bookmark' }]);
-    undefined.$el.html(_underscore2.default.template('tmp-tags.edit')({
+    this.$el.html(_underscore2.default.template('tmp-tags.edit')({
       tag: tag,
       relatedTags: _underscore2.default.pluck(tag.attributes.bookmarks, 'id'),
       bookmarks: _app2.default.collections.bookmarks.models
     }));
-    _app2.default.views.main.changeContent(undefined.el);
-    undefined.events = { 'submit #tag_edit': 'editSubmit' };
-    undefined.delegateEvents();
-    return undefined;
+    _app2.default.views.main.changeContent(this.el);
+    this.events = { 'submit #tag_edit': 'editSubmit' };
+    this.delegateEvents();
+    return this;
   },
   delete: function _delete(id) {
     _app2.default.collections.tags.delete(id);
     _app2.default.router.navigate('tags', { trigger: true });
-    undefined.events = {};
-    undefined.delegateEvents();
-    return undefined;
+    this.events = {};
+    this.delegateEvents();
+    return this;
   }
 });
 
@@ -18745,7 +18749,7 @@ exports.default = _backbone.View.extend({
   el: '#top-bar',
   titleTemplate: _underscore2.default.template('tmp-layouts.top-bar'),
   setTitle: function setTitle(linkObj) {
-    return undefined.$('.title').html(undefined.titleTemplate({ linkObj: linkObj }));
+    this.$('.title').html(this.titleTemplate({ linkObj: linkObj }));
   }
 });
 

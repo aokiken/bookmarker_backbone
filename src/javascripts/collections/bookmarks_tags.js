@@ -5,7 +5,7 @@ import ModelBookmarksTags from '../models/bookmarks_tags';
 export default Collection.extend({
   model: ModelBookmarksTags,
   localStorage: new Store('bookmarksTags'),
-  initialize: () => {
+  initialize() {
     this.on('add', this.addHook);
     this.on('remove', this.removeHook);
     this.fetch();

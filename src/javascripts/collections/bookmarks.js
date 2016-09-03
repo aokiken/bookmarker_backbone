@@ -6,7 +6,7 @@ import app from '../app';
 export default Collection.extend({
   model: ModelBookmarks,
   localStorage: new Store('bookmarks'),
-  initialize: () => {
+  initialize() {
     this.on('add', this.addHook);
     this.on('change', this.changeHook);
     this.on('remove', this.removeHook);
@@ -16,8 +16,7 @@ export default Collection.extend({
   addHook: (bookmark) => bookmark.save(),
   changeHook: (bookmark) => bookmark.save(),
   removeHook: (bookmark) => bookmark.destroy(),
-
-  serializeArrayFormat: (data) => {
+  serializeArrayFormat(data) {
     const result = {};
     data.forEach((item) => {
       const isArray = item.name.indexOf('[]') > -1;
@@ -31,7 +30,7 @@ export default Collection.extend({
     });
     return result;
   },
-  addSubmit: (data) => {
+  addSubmit(data) {
     data = this.serializeArrayFormat(data);
     const tagIds = ('tag_ids' in data) ? data.tag_ids : [];
     delete data.tag_ids;
@@ -46,7 +45,7 @@ export default Collection.extend({
     }
     return this;
   },
-  editSubmit: (data) => {
+  editSubmit(data) {
     data = this.serializeArrayFormat(data);
     const bookmark = app.collections.bookmarks.get(data.id);
     const bookmarksTags = app.collections.bookmarksTags.find({ bookmark_id: data.id });
@@ -64,7 +63,7 @@ export default Collection.extend({
     }
     return this;
   },
-  view: (id) => {
+  view(id) {
     const bookmark = this.get(id);
     const bookmarksTags = app.collections.bookmarksTags.where({
       bookmark_id: String(bookmark.attributes.id),
@@ -74,7 +73,7 @@ export default Collection.extend({
       bookmark.attributes.tags.push(app.collections.tags.get(item.attributes.tag_id)));
     return bookmark;
   },
-  edit: (id) => {
+  edit(id) {
     const bookmark = this.get(id);
     const bookmarksTags = app.collections.bookmarksTags.where({
       bookmark_id: String(bookmark.attributes.id),
@@ -84,7 +83,7 @@ export default Collection.extend({
       bookmark.attributes.tags.push(app.collections.tags.get(item.attributes.tag_id)));
     return bookmark;
   },
-  delete: (id) => {
+  delete(id) {
     this.remove(id);
     const bookmarkTags = app.collections.bookmarksTags.where({
       bookmark_id: String(id),

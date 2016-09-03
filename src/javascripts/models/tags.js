@@ -7,5 +7,7 @@ export default Model.extend({
     created: Date.now(),
     modified: Date.now(),
   },
-  dateFormat: (columnName) => moment(this.get(columnName)).format('YYYY/MM/DD, h:mm a'),
+  dateFormat(columnName) {
+    return moment(this.attributes[columnName]).format('YYYY/MM/DD, h:mm a');
+  },
 });

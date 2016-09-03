@@ -10,7 +10,7 @@ import CollectionBookmarksTags from './collections/bookmarks_tags';
 import CollectionTags from './collections/tags';
 import Router from './routes/router';
 
-let App = () => {
+let App = function Application() {
   let instance;
   App = () => instance;
   App.prototype = this;
