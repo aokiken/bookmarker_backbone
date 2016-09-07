@@ -16,4 +16,4 @@ form#bookmark_add(accept-charset="utf-8")
         <% _.each(tags, function(tag) { %>
           option(value!="<%= tag.attributes.id %>") <%= tag.attributes.title %>
         <% }); %>
-  button(type="submit") Submit
+  button#Submit(type="submit") Submit

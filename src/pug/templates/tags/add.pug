@@ -10,4 +10,4 @@ form#tag_add(accept-charset="utf-8")
         <% _.each(bookmarks, function(bookmark) { %>
         option(value!="<%= bookmark.attributes.id %>") <%= bookmark.attributes.title %>
         <% }); %>
-  button(type="submit") Submit
+  button#Submit(type="submit") Submit

@@ -1,3 +1,5 @@
 dest
 .idea/
 node_mgodules/
+/test
+coverage

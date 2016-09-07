@@ -1,9 +1,9 @@
 import 'babel-polyfill';
 export default {
-  entry: './src/javascripts/entry.js',
+  entry: './src/test',
   output: {
     path: './dest/javascripts',
-    filename: 'bundle.js'
+    filename: '[name].js'
   },
   target: 'web',
   module: {

@@ -8,4 +8,3 @@ export default View.extend({
     this.$('.side-nav').html(this.linksTemplate({ linkObjs: linkObjs }));
   },
 });
-
