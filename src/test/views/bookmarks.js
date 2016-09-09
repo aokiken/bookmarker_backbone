@@ -8,14 +8,14 @@ describe('View bookmarks test', () => {
   });
   it('index', (done) => {
     $(() => {
-      let bookmarks = app.views.bookmarks;
+      const bookmarks = app.views.bookmarks;
       bookmarks.index();
       done();
     });
   });
   it('add', (done) => {
     $(() => {
-      let bookmarks = app.views.bookmarks;
+      const bookmarks = app.views.bookmarks;
       bookmarks.add();
       bookmarks.$('#title').val('sample title');
       bookmarks.$('#description').val('sample description');
@@ -27,7 +27,7 @@ describe('View bookmarks test', () => {
   });
   it('edit', (done) => {
     $(() => {
-      let bookmarks = app.views.bookmarks;
+      const bookmarks = app.views.bookmarks;
       const id = app.collections.bookmarks.models[0].get('id');
       bookmarks.edit(id);
       bookmarks.$('#title').val('sample edit title');
@@ -40,7 +40,7 @@ describe('View bookmarks test', () => {
   });
   it('delete', (done) => {
     $(() => {
-      let bookmarks = app.views.bookmarks;
+      const bookmarks = app.views.bookmarks;
       const id = app.collections.bookmarks.models[0].get('id');
       bookmarks.delete(id);
       assert.equal(app.collections.bookmarks.length, 0);

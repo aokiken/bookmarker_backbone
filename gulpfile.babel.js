@@ -10,7 +10,6 @@ import source from 'vinyl-source-stream';
 import buffer from 'vinyl-buffer';
 import watch from 'gulp-watch';
 import util from 'gulp-util';
-import concat from 'gulp-concat-util';
 import ptu from 'gulp-pug-template-underscore';
 import pug from 'gulp-pug';
 import sass from 'gulp-sass';
@@ -33,7 +32,7 @@ const javascriptTasks = () => {
     }))
     .pipe(sourcemaps.init({ loadMaps: true }))
     .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest('./dest/javascripts'))
+    .pipe(gulp.dest('./dest/javascripts'));
 };
 
 const stylesheetTasks = () => {
@@ -72,7 +71,7 @@ gulp.task('develop', () => {
 });
 
 gulp.task('lint', () =>
-  gulp.src(['src/javascripts/**/*.js', 'gulpfile.babel.js', '!node_modules/**'])
+  gulp.src(['src/javascripts/**/*.js', 'src/test/**/*.js', 'gulpfile.babel.js', '!node_modules/**'])
     .pipe(eslint())
     .pipe(eslint.format())
     .pipe(eslint.failAfterError())
@@ -99,21 +98,20 @@ gulp.task('build:test', ['clean'], () => {
   const srcPath = 'src/test';
   recursive(srcPath, ['helper.js'], (err, files) => {
     files.forEach((file) => {
-        const fileName = file.match(new RegExp('(?!.*/).', 'g'), '').join('');
-        const destPath = file.replace(new RegExp(`src/|/${fileName}`, 'g'), '');
-        browserify(file)
-          .transform(babel)
-          .bundle()
-          .on('error', (err) => console.log('Error : ' + err.message))
-          .pipe(source(fileName))
-          .pipe(buffer())
-          .pipe(ptu({
-            templateDirPath: 'src/pug/templates',
-            prefix: 'tmp-',
-          }))
-          .pipe(gulp.dest(destPath))
-      }
-    );
+      const fileName = file.match(new RegExp('(?!.*/).', 'g'), '').join('');
+      const destPath = file.replace(new RegExp(`src/|/${fileName}`, 'g'), '');
+      browserify(file)
+        .transform(babel)
+        .bundle()
+        .on('error', (err) => console.log(`Error : ${err.message}`))
+        .pipe(source(fileName))
+        .pipe(buffer())
+        .pipe(ptu({
+          templateDirPath: 'src/pug/templates',
+          prefix: 'tmp-',
+        }))
+        .pipe(gulp.dest(destPath));
+    });
   });
 });
 

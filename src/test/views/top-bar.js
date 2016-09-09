@@ -11,6 +11,6 @@ describe('View top bar test', () => {
     const id = 1;
     const titleObj = { href: `./#bookmarks/edit/${id}`, text: 'Bookmarks' };
     topBar.setTitle(titleObj);
-    assert.equal(topBar.$('.title').html(),'<a href=\"./#bookmarks/edit/1\">Bookmarks</a>');
+    assert.equal(topBar.$('.title').html(), '<a href="./#bookmarks/edit/1">Bookmarks</a>');
   });
 });

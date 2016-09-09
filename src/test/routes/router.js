@@ -1,4 +1,5 @@
 import { $, _, app } from '../helper';
+
 describe('routing test', () => {
   beforeEach((done) => {
     document.body.innerHTML = _.template('tmp-test.index')()

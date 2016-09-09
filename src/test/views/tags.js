@@ -8,14 +8,14 @@ describe('View tags test', () => {
   });
   it('index', (done) => {
     $(() => {
-      let tags = app.views.tags;
+      const tags = app.views.tags;
       tags.index();
       done();
     });
   });
   it('add', (done) => {
     $(() => {
-      let tags = app.views.tags;
+      const tags = app.views.tags;
       tags.add();
       tags.$('#title').val('sample title');
       tags.$('#tag_add').submit();
@@ -25,7 +25,7 @@ describe('View tags test', () => {
   });
   it('edit', (done) => {
     $(() => {
-      let tags = app.views.tags;
+      const tags = app.views.tags;
       const id = app.collections.tags.models[0].get('id');
       tags.edit(id);
       tags.$('#title').val('sample edit title');
@@ -36,7 +36,7 @@ describe('View tags test', () => {
   });
   it('delete', (done) => {
     $(() => {
-      let tags = app.views.tags;
+      const tags = app.views.tags;
       const id = app.collections.tags.models[0].get('id');
       tags.delete(id);
       assert.equal(app.collections.tags.length, 0);

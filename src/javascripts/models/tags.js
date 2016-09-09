@@ -8,8 +8,8 @@ export default Model.extend({
     modified: Date.now(),
   },
   initialize() {
-    this.on('change', (model) => model.set({modified: Date.now()}));
-    this.on('save', (model) => model.set({modified: Date.now()}));
+    this.on('change', (model) => model.set({ modified: Date.now() }));
+    this.on('save', (model) => model.set({ modified: Date.now() }));
   },
   dateFormat(columnName) {
     return moment(this.attributes[columnName]).format('YYYY/MM/DD, h:mm a');

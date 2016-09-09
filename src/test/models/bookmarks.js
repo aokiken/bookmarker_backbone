@@ -5,7 +5,7 @@ describe('Model bookmark test', () => {
     const title = 'sample title';
     const description = 'sample description';
     const url = 'sample url';
-    let bookmark = new ModelBookmarks();
+    const bookmark = new ModelBookmarks();
     bookmark.set({
       title: title,
       description: description,
