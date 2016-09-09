@@ -12,3 +12,5 @@ export { default as ViewMain } from '../javascripts/views/main';
 export { default as ViewTopBar } from '../javascripts/views/top-bar';
 export { default as Router } from '../javascripts/routes/router';
 
+export { default as util } from './util';
+

@@ -1,4 +1,4 @@
-import { _, ViewTopBar } from '../helper';
+import { util, _, ViewTopBar } from '../helper';
 
 describe('View top bar test', () => {
   beforeEach(() => {

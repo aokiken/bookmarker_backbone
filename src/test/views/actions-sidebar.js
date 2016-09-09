@@ -1,10 +1,8 @@
-import { _, ViewActionsSidebar } from '../helper';
+import { util, _, ViewActionsSidebar } from '../helper';
 
 describe('View action sidebar test', () => {
   beforeEach(() => {
-    document.body.innerHTML = _.template('tmp-test.index')()
-      .match(`<body(".*?"|[^'"])*>*?</body>`)[0]
-      .replace(new RegExp(`<body*?>|</body>|<script(".*?"|[^'"])*>*?</script>`, 'g'), '');
+    document.body.innerHTML = util.testFormat(_.template('tmp-test.index')());
   });
   it('setLinks', () => {
     const dom = '<li class="heading">Actions</li>' +

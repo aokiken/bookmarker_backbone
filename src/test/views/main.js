@@ -1,10 +1,8 @@
-import { _, ViewMain } from '../helper';
+import { util, _, ViewMain } from '../helper';
 
 describe('View main test', () => {
   beforeEach(() => {
-    document.body.innerHTML = _.template('tmp-test.index')()
-      .match(`<body(".*?"|[^'"])*>*?</body>`)[0]
-      .replace(new RegExp(`<body*?>|</body>|<script(".*?"|[^'"])*>*?</script>`, 'g'), '');
+    document.body.innerHTML = util.testFormat(_.template('tmp-test.index')());
   });
   it('changeContent', () => {
     const main = new ViewMain();
