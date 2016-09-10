@@ -9,92 +9,99 @@ import sourcemaps from 'gulp-sourcemaps';
 import source from 'vinyl-source-stream';
 import buffer from 'vinyl-buffer';
 import watch from 'gulp-watch';
+import uglify from 'gulp-uglify';
 import util from 'gulp-util';
 import ptu from 'gulp-pug-template-underscore';
 import pug from 'gulp-pug';
 import sass from 'gulp-sass';
 import autoprefixer from 'gulp-autoprefixer';
-import mocha from 'gulp-mocha';
 import istanbul from 'gulp-istanbul';
 import remapIstanbul from 'remap-istanbul/lib/gulpRemapIstanbul';
 
-const javascriptTasks = () => {
-  browserify('./src/javascripts/app.js').transform(babel).bundle()
+gulp.task('javascriptTasks', (callback) => {
+  browserify({
+    entries: './src/javascripts/app.js',
+    debug: true,
+  })
+    .transform(babel)
+    .bundle()
     .on('error', (err) => {
       console.error(err);
       this.emit('end');
     })
     .pipe(source('app.js'))
     .pipe(buffer())
+    .pipe(sourcemaps.init({loadMaps: true}))
     .pipe(ptu({
       templateDirPath: 'src/pug/templates',
       prefix: 'tmp-',
     }))
-    .pipe(sourcemaps.init({ loadMaps: true }))
+    .pipe(uglify())
     .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest('./dest/javascripts'));
-};
+    .pipe(gulp.dest('./dest/javascripts'))
+    .on('end', () => {
+      callback();
+    });
+});
 
-const stylesheetTasks = () => {
-  util.log('stylesheetTasks...');
+gulp.task('stylesheetTasks', () => {
   gulp.src(['src/sass/**/*.scss', '!src/sass/{vendors,modules}/**/*.scss'])
     .pipe(sass().on('error', sass.logError))
     .pipe(autoprefixer())
-    .pipe(gulp.dest('dest/stylesheets'))
-    .on('end', () => util.log('stylesheetTasks done.')
-  );
-};
+    .pipe(gulp.dest('dest/stylesheets'));
+});
 
-const htmlTasks = () => {
-  util.log('htmlTasks...');
+gulp.task('htmlTasks', () => {
   gulp.src(['src/pug/**/*.pug', '!src/pug/{templates,modules,layouts}/**/*.pug'])
     .pipe(plumber())
-    .pipe(pug({ pretty: true }))
-    .pipe(gulp.dest('dest'))
-    .on('end', () =>
-      util.log('htmlTasks done.'));
-};
+    .pipe(pug({pretty: true}))
+    .pipe(gulp.dest('dest'));
+});
 
-gulp.task('clean', () => del(['dest/javascripts/', 'test/', 'maps/', 'coverage/']));
+gulp.task('clean', () => del(['test/', 'maps/', 'coverage/']));
 
 gulp.task('start', () => {
-  javascriptTasks();
-  stylesheetTasks();
-  htmlTasks();
+  gulp.start(['javascriptTasks', 'stylesheetTasks', 'htmlTasks']);
 });
 
 gulp.task('develop', () => {
   gulp.start('start');
-  watch(['src/javascripts/**/*.js', 'src/pug/**/*.pug'], javascriptTasks);
-  watch(['src/sass/**/*.scss'], stylesheetTasks);
-  watch(['src/pug/**/*.pug'], htmlTasks);
+  watch(['src/javascripts/**/*.js', 'src/pug/**/*.pug'], () => gulp.start('javascriptTasks'));
+  watch(['src/sass/**/*.scss'], () => gulp.start('stylesheetTasks'));
+  watch(['src/pug/**/*.pug'], () => gulp.start('htmlTasks'));
 });
 
-gulp.task('lint', () =>
+gulp.task('lint', ['clean'], () => {
   gulp.src(['src/javascripts/**/*.js', 'src/test/**/*.js', 'gulpfile.babel.js', '!node_modules/**'])
     .pipe(eslint())
     .pipe(eslint.format())
     .pipe(eslint.failAfterError())
-);
+});
 
-gulp.task('build', ['clean'], () =>
-  browserify('./src/javascripts/app.js').transform(babel).bundle()
+gulp.task('build', ['clean', 'lint'], () => {
+  browserify({
+    entries: './src/javascripts/app.js',
+    debug: true,
+  })
+    .transform(babel)
+    .bundle()
     .on('error', (err) => {
       console.error(err);
       this.emit('end');
     })
     .pipe(source('app.js'))
     .pipe(buffer())
+    .pipe(sourcemaps.init({loadMaps: true}))
     .pipe(ptu({
       templateDirPath: 'src/pug/templates',
       prefix: 'tmp-',
     }))
-    .pipe(sourcemaps.init({ loadMaps: true }))
+    .pipe(uglify())
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('./dest/javascripts'))
-);
+});
 
-gulp.task('build:test', ['clean'], (callback) => {
+gulp.task('build:test', ['clean', 'lint'], (callback) => {
   const srcPath = 'src/test';
   recursive(srcPath, ['helper.js', 'util.js'], (err, files) => {
     let doneCount = 0;
@@ -121,25 +128,5 @@ gulp.task('build:test', ['clean'], (callback) => {
     });
   });
 });
-
-gulp.task('test', ['build:test'], () =>
-  gulp.src(['test/**/*.js'])
-    .pipe(mocha({ timeout: 10000 }))
-    .pipe(istanbul.writeReports())
-    .pipe(istanbul.enforceThresholds({ thresholds: { global: 50 } }))
-);
-
-
-gulp.task('remap-istanbul', ['test'], () =>
-  gulp.src('coverage/coverage-final.json')
-    .pipe(remapIstanbul({
-      basePath: 'maps/',
-      reports: {
-        json: 'coverage/coverage.json',
-        html: 'coverage/lcov-report',
-        lcovonly: 'coverage/lcov.info',
-      },
-    }))
-);
 
 gulp.task('default', ['lint', 'test']);
