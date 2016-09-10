@@ -94,9 +94,10 @@ gulp.task('build', ['clean'], () =>
     .pipe(gulp.dest('./dest/javascripts'))
 );
 
-gulp.task('build:test', ['clean'], () => {
+gulp.task('build:test', ['clean'], (callback) => {
   const srcPath = 'src/test';
-  recursive(srcPath, ['helper.js'], (err, files) => {
+  recursive(srcPath, ['helper.js', 'util.js'], (err, files) => {
+    let doneCount = 0;
     files.forEach((file) => {
       const fileName = file.match(new RegExp('(?!.*/).', 'g'), '').join('');
       const destPath = file.replace(new RegExp(`src/|/${fileName}`, 'g'), '');
@@ -110,7 +111,13 @@ gulp.task('build:test', ['clean'], () => {
           templateDirPath: 'src/pug/templates',
           prefix: 'tmp-',
         }))
-        .pipe(gulp.dest(destPath));
+        .pipe(gulp.dest(destPath))
+        .on('end', () => {
+          doneCount++;
+          if (doneCount === files.length) {
+            callback();
+          }
+        });
     });
   });
 });

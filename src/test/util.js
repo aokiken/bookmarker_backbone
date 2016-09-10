@@ -1,4 +1,4 @@
-let util = {};
+const util = {};
 util.testFormat = (htmlString) =>
   htmlString
     .match(`<body(".*?"|[^'"])*>*?</body>`)[0]

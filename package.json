@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "test": "gulp build:test && ./node_modules/karma/bin/karma start karma.conf.js",
+    "test": "gulp lint build:test && ./node_modules/karma/bin/karma start karma.conf.js",
     "start": "gulp start && npm run server",
     "develop": "gulp develop",
     "server": "./node_modules/http-server/bin/http-server dest"
@@ -42,17 +42,19 @@
     "gulp-watch": "^4.3.9",
     "http-server": "^0.9.0",
     "karma": "^1.2.0",
+    "karma-browserify": "^5.1.0",
     "karma-chrome-launcher": "^2.0.0",
     "karma-coverage": "^1.1.1",
+    "karma-firefox-launcher": "^1.0.0",
     "karma-html2js-preprocessor": "^1.0.0",
     "karma-mocha": "^1.1.1",
     "karma-mocha-reporter": "^2.1.0",
     "karma-power-assert": "0.0.4",
-    "remap-istanbul": "^0.6.4",
-    "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0",
     "mocha": "^3.0.2",
     "power-assert": "^1.4.1",
-    "recursive-readdir": "^2.0.0"
+    "recursive-readdir": "^2.0.0",
+    "remap-istanbul": "^0.6.4",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
   }
 }
