@@ -76,29 +76,6 @@ gulp.task('lint', ['clean'], () => {
     .pipe(eslint.failAfterError());
 });
 
-gulp.task('build', ['clean', 'lint'], () => {
-  browserify({
-    entries: './src/javascripts/app.js',
-    debug: true,
-  })
-    .transform(babel)
-    .bundle()
-    .on('error', (err) => {
-      console.error(err);
-      this.emit('end');
-    })
-    .pipe(source('app.js'))
-    .pipe(buffer())
-    .pipe(sourcemaps.init({ loadMaps: true }))
-    .pipe(ptu({
-      templateDirPath: 'src/pug/templates',
-      prefix: 'tmp-',
-    }))
-    .pipe(uglify())
-    .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest('./dest/javascripts'));
-});
-
 gulp.task('build:test', ['clean', 'lint'], (callback) => {
   const srcPath = 'src/test';
   recursive(srcPath, ['helper.js', 'util.js'], (err, files) => {
