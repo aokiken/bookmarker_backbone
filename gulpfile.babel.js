@@ -15,8 +15,6 @@ import ptu from 'gulp-pug-template-underscore';
 import pug from 'gulp-pug';
 import sass from 'gulp-sass';
 import autoprefixer from 'gulp-autoprefixer';
-import istanbul from 'gulp-istanbul';
-import remapIstanbul from 'remap-istanbul/lib/gulpRemapIstanbul';
 
 gulp.task('javascriptTasks', (callback) => {
   browserify({
@@ -31,7 +29,7 @@ gulp.task('javascriptTasks', (callback) => {
     })
     .pipe(source('app.js'))
     .pipe(buffer())
-    .pipe(sourcemaps.init({loadMaps: true}))
+    .pipe(sourcemaps.init({ loadMaps: true }))
     .pipe(ptu({
       templateDirPath: 'src/pug/templates',
       prefix: 'tmp-',
@@ -54,7 +52,7 @@ gulp.task('stylesheetTasks', () => {
 gulp.task('htmlTasks', () => {
   gulp.src(['src/pug/**/*.pug', '!src/pug/{templates,modules,layouts}/**/*.pug'])
     .pipe(plumber())
-    .pipe(pug({pretty: true}))
+    .pipe(pug({ pretty: true }))
     .pipe(gulp.dest('dest'));
 });
 
@@ -75,7 +73,7 @@ gulp.task('lint', ['clean'], () => {
   gulp.src(['src/javascripts/**/*.js', 'src/test/**/*.js', 'gulpfile.babel.js', '!node_modules/**'])
     .pipe(eslint())
     .pipe(eslint.format())
-    .pipe(eslint.failAfterError())
+    .pipe(eslint.failAfterError());
 });
 
 gulp.task('build', ['clean', 'lint'], () => {
@@ -91,14 +89,14 @@ gulp.task('build', ['clean', 'lint'], () => {
     })
     .pipe(source('app.js'))
     .pipe(buffer())
-    .pipe(sourcemaps.init({loadMaps: true}))
+    .pipe(sourcemaps.init({ loadMaps: true }))
     .pipe(ptu({
       templateDirPath: 'src/pug/templates',
       prefix: 'tmp-',
     }))
     .pipe(uglify())
     .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest('./dest/javascripts'))
+    .pipe(gulp.dest('./dest/javascripts'));
 });
 
 gulp.task('build:test', ['clean', 'lint'], (callback) => {
