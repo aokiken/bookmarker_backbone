@@ -1,5 +1,5 @@
 dest
 .idea/
-node_mgodules/
+node_modules/
 /test
 coverage
