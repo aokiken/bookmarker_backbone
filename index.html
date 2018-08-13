@@ -33,5 +33,10 @@
     </div>
     <footer></footer>
     <script src="./javascripts/app.js"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./javascripts/sw.js');
+      }
+    </script>
   </body>
 </html>

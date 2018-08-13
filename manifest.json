@@ -4,7 +4,7 @@
   "theme_color": "#01545b",
   "background_color": "#01545b",
   "display": "standalone",
-  "Scope": "/",
+  "Scope": "/bookmarker_backbone",
   "start_url": "https://aokiken.github.io/bookmarker_backbone",
   "manifest_version": 2,
   "icons": [
